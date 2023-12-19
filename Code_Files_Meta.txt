@@ -1,0 +1,190 @@
+1) problem 
+Create a function to return the longest word in a string.
+Input: “dummy text of the printing and typesetting industry.”
+Output: typesetting 
+Input: “It is a long-established fact that a reader will be distracted by the readable content of a page when looking at its layout. 
+The point of using Lorem Ipsum is that it has a more-or-less normal distributionqqqqqqqqqqqqqqqqqqq of letters, as opposed to using 'Content here, content here', making it look like readable English”
+Output: distributionqqqqqqqqqqqqqqqqqqq 
+
+import java.util.*;
+
+
+public class GreaterLengthWord {
+       
+	public static String greaterLengthWord(String stg){
+		String [] words=stg.split(" ");
+		String word="";
+		
+		for (String w:words) {
+			if(w.length()>word.length()) {
+				word=w;
+			}
+		}
+		return word;
+	}
+	
+	public static void main(String [] args) {
+		String stg="dummy text of the printing and typesetting industry.";
+		Scanner sc=new Scanner(System.in);
+		
+		System.out.println("Please enter the string :");
+		String stg=sc.nextLine();
+	    System.out.println("longest length of the word in the string :::>"+GreaterLengthWord.greaterLengthWord(stg));
+	}
+}
+
+
+2) Find the maximum number in a jagged array of numbers or array of numbers.
+Input: [2, 4, 10, [12, 4, [100, 99], 4], [3, 2, 99], 0]
+
+
+public class MaxElementArray {
+
+    public static void main(String[] args) {
+        Object[] input = {2, 4, 10, new Object[]{12, 4, new Object[]{100, 99}, 4}, new Object[]{3, 2, 99}, 0};
+
+        int number=MaxNumber(input);
+        System.out.println("Maximum number in the jagged array: " + number);
+    }
+
+    public static int MaxNumber(Object[] array) {
+        int maxNumber = Integer.MIN_VALUE;
+
+        for (Object element : array) {
+            if (element instanceof Integer) {
+          
+                maxNumber = Math.max(maxNumber, (int) element);
+            } else if (element instanceof Object[]) {
+            
+                int maxInSubArray = findMaxNumber((Object[]) element);
+               
+                maxNumber = Math.max(maxNumber, maxInSubArray);
+            }
+            
+        }
+
+        return maxNumber;
+    }
+}
+
+3) Create JSON object any detail
+E.g. EmployeeData = {{fname:”abc”, lname:”xyz”, id: 1}, {fname:”abc”, lname:”xyz”, id: 2}}
+Apply CURD operation on that JSON Data.
+
+@Entity
+@Table
+public class EmployeeData {
+	@Id
+	int id;
+	String name;
+	String fname;
+	
+	
+	public EmployeeData() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public EmployeeData(int id, String name, String fname) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.fname = fname;
+	}
+
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getFname() {
+		return fname;
+	}
+	public void setFname(String fname) {
+		this.fname = fname;
+	}
+
+	@Override
+	public String toString() {
+		return "EmployeeData [id=" + id + ", name=" + name + ", fname=" + fname + "]";
+	}
+	
+	
+
+}
+//CRUD OPERATION CLASS
+
+
+public class ClientClass {
+      //// here we crud operation code of employee data
+	
+	Configuration cfg=new Configuration();
+	cfg.configure();
+	cfg.addAnotetedClass(EmployeeData.class);
+    SessionFactory factory=session.buildSessionFactory();
+    Session session=factory.openSession();
+    
+    // Load method retrive data from databse by refering primary key...
+    EmployeeData e1=session.load(EmployeeData.class,1);
+    
+    
+    // Save ....insert the data intodatbase...
+    session.save(e1);
+    session.saveOrUpdate(e1);
+    //
+    
+    /// Query Interface is also provide to performe  crud operation over database...
+    
+    Query query=session.createQuery("select SUM(id) from EmployeeData");
+    List l=session.list();
+    
+    System.out.println("SUM OF ID'S of employees are: "+l);
+    
+    
+    		
+    
+}
+
+
+5) Write a program that accepts an email string and validates that email. If email is valid must display success message and If email is not valid must display error message
+Example:  Input - test01*gmail.com
+	     Output - Invalid Email Id
+	     Input - student01@gmail.com
+	     Output - Valid Email Id
+
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class EmailValidator {
+
+    public static void main(String[] args) {
+        /
+        String email1 = "test01*gmail.com";
+        String email2 = "student01@gmail.com";
+        validateEmail(email1);
+        validateEmail(email2);
+    }
+
+    public static void validateEmail(String email) {
+     
+        String emailRegex = "^[a-zA-Z0-9_+&*-]";
+
+        Pattern pattern = Pattern.compile(emailRegex);
+
+        Matcher matcher = pattern.matcher(email);
+
+        if (matcher.matches()) {
+            System.out.println("Valid Email Id");
+        } else {
+            System.out.println("Invalid Email Id");
+        }
+    }
+}
